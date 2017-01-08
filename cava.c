@@ -282,6 +282,10 @@ void validate_config()
 		om = 3;
 		bgcol = 0;
 	}
+	if (strcmp(outputMethod, "apa") == 0) {
+ 		om = 4;
+	}
+
 	if (om == 0) {
 		#ifndef NCURSES
 		fprintf(stderr,
@@ -679,6 +683,11 @@ as of 0.4.0 all options are specified in config file, see in '/home/username/.co
 
 		if (om == 3) get_terminal_dim_noncurses(&w, &h);
 
+		if (om == 4) {
+			w = 1000;
+			h = 255;
+		}
+
  		//handle for user setting too many bars
 		if (fixedbars) {
 			autobars = 0;
@@ -953,6 +962,13 @@ as of 0.4.0 all options are specified in config file, see in '/home/username/.co
 					case 3:
 						rc = draw_terminal_noncurses(inAVirtualConsole, h, w, bars, bw, bs, rest, f, flastd);
 						break;
+					case 4: 
+						printf("%d ", bars);
+						for (o = 0; o < bars; o++) {
+						  printf("%d ", f[o]);
+						}
+						printf("\n");
+						fflush(stdout);
 				}
 
 				if (rc == -1) resizeTerminal = TRUE; //terminal has been resized breaking to recalibrating values
